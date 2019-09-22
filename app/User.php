@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+  
+    /**
+     * Create admin.
+     *
+     * @param array $details
+     * @return array
+     */
+    public function createUser(array $details) : self
+    {
+        $user = new self($details);
+        $user->save();
+        return $user;
+    }
 }

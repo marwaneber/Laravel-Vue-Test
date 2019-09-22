@@ -42,7 +42,7 @@ export default {
       send_item(){
           if(this.validate_item(this.item)){
               axios
-                .post("api/add_item", this.item)
+                .get("api/add_item", this.item)
                 .then(res=>{
                     console.log(res);
                 })

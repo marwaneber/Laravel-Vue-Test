@@ -1880,7 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     send_item: function send_item() {
       if (this.validate_item(this.item)) {
-        axios.post("api/add_item", this.item).then(function (res) {
+        axios.get("api/add_item", this.item).then(function (res) {
           console.log(res);
         })["catch"](function (err) {
           console.log(err);

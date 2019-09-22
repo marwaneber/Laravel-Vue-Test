@@ -86,19 +86,13 @@ class HomeController extends Controller
     }
 
 
-    public function api_add_item(Request $request){
+    public function Store(Request $request){
         // Items::create($request->all());
-        try {
-
-            $new_item = Items::create([
-                "title" => $request->title,
-                "description" => $request->description
-                ]);
-        }catch (Exception $e){
-            return $e;
-        }
+      
+            $new_item = Items::create($request->all());
+       
 
         // return ["state" => "success"];
-        return $new_item;
+        // return $new_item;
     }
 }
