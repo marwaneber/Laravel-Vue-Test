@@ -1,0 +1,101 @@
+# Software Engineer - Laravel/VueJs coding challenge
+
+## How to participate
+
+1. Read the instructions carefully and do not hesitate to check the **Links and resources** section before you start.
+2. Join us in [slack](https://join.slack.com/t/next-media-team/shared_invite/enQtMzM0MjIzNjkyNDUxLTI5ZjhhNTkxZTZiYzdkODIyMDkyZWIyNjFlZTE5MmQzMjNkNzZkOTdmMjcyY2Q1NTZlN2E2NTBkYjk1MGU3Mjk), then join **#tech-challenge** and do not hesitate to address any question, there is no stupid question, we're available to help daily. 
+3. When you're ready to start the test, make sure you init a Github repository and share the link by email to **tech-challenge@nextmedia.ma** with the object **Coding Challenge Laravel/VueJs application by FirstName LastName**, it'll be considered as the time your started working on the challenge.
+4. Once you're done with the test, reply again by email to notify us you're done with it. 
+
+Make sure you spare an **average of 4 hours**, and a **maximum of 1 day** to work on the challenge.
+
+## Context
+
+- You should build a small and concise app the right way.
+
+- The app contains only users and items, with some features and interactions.
+
+- The goal of this test is more to evaluate the way of thinking, design and quality of code (We accept juniors and seniors).
+
+- CSS & colors are not evaluated.
+ 
+## Technologies to use
+ 
+- Laravel / VueJs
+- PHP7 / MySQL
+        
+## Brief
+
+### Homepage
+- List all items with infinite scroll pagination using a VueJs Component.
+
+### Features with UI
+- As a user, I can register by providing simply an email and a password.
+- As a logged user, I can update my password.
+- As a logged user, I can add items. An item is a title, image and description.
+
+### Features commandline
+- I should be able to add a new user from the command line.
+- I should be able to change a user password from the command line.
+- I should be able to seed fake data (10000 items / 100 users) from the command line.
+
+### Testability
+- Write some unit tests
+
+## Evaluation criteria 🚨
+- Accuracy to follow instructions.
+- Respect of software engineering principles : DRY, KISS, YAGNI, SOLID.
+- Code readability and coding style (PSR).
+- Clean commit history in git making code review easy, push progressively instead of pushing the whole project in a single commit.
+- Quality of documentation (The readme should be short and concise, like open source projects readme).
+
+
+## Instructions
+- Put more focus on code quality and less on speed. 
+- Don't hack something quickly, take your time and craft something clean, with layers and separation of concerns.
+- Write a readable and maintainable code.
+- Subscribe to the repository so you're notified about any change performed in this test 
+
+## Questions?
+
+If you have any questions, ask directly in our slack, room #tech-challenge.  
+
+## Links & resources
+
+### Mandatory to know
+
+#### PSR & coding style
+- PSR-1: https://www.php-fig.org/psr/psr-1/
+- PSR-2: https://www.php-fig.org/psr/psr-2/
+- PSR: https://www.php-fig.org/psr/
+
+#### Code design principles
+- DRY: [Don't repeat your self](https://deviq.com/don-t-repeat-yourself/), [Is your code dry or wet?](https://www.softwareyoga.com/is-your-code-dry-or-wet/)
+- [Single responsibility principle](https://deviq.com/single-responsibility-principle/)
+- [SOLID](https://deviq.com/solid/)   
+- [KISS, DRY, TDA, YAGNI](https://medium.com/@derodu/design-patterns-kiss-dry-tda-yagni-soc-828c112b89ee)
+
+### Best practices
+
+- [PHP best practices](https://phpbestpractices.org/)
+- [PHP the right way](https://phptherightway.com/)
+- [Awesome PHP](https://github.com/ziadoz/awesome-php)
+
+### Laravel & VueJs
+
+- [Laravel](https://laravel.com)
+- [VueJs](https://vuejs.org/v2/guide/)
+- [Laravel Vue Single file component](https://medium.com/plint-sites/javascript-in-laravel-vue-single-file-components-69be12033d98)
+- [Introduction to VueJs in Laravel](https://medium.com/justlaravel/introduction-to-vue-js-in-laravel-e8757174e58e)
+- [Awesome Laravel](https://github.com/TimothyDJones/awesome-laravel)
+- [Awesome Laravel 2](https://github.com/chiraggude/awesome-laravel)
+
+
+### PHP / Laravel / Symfony
+- https://laravel.com
+- https://github.com/ziadoz/awesome-php
+- https://github.com/TimothyDJones/awesome-laravel
+- https://github.com/chiraggude/awesome-laravel
+
+
+That’s it ! May the force be with you !! 🖖 
