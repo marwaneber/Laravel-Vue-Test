@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/update_password', 'HomeController@update_password')->name('update_password');
 
 Route::post('/user/credentials', 'HomeController@postCredentials')->name('update_password_api');
+
+Route::get('/api/items', 'HomeController@api')->name('get_items_api');
+
+Route::post('/api/add_item', 'HomeController@api_add_item')->name('add_items');

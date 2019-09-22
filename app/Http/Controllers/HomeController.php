@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-// use Auth;
 use Hash;
 use App\User;
+use App\Items;
 class HomeController extends Controller
 {
     /**
@@ -52,6 +52,11 @@ class HomeController extends Controller
         return $validator;
     }
 
+    public function api(){
+        $items_data = Items::all();
+        return $items_data;
+    }
+
     public function postCredentials(Request $request)
     {
         if(Auth::Check()){
@@ -78,5 +83,22 @@ class HomeController extends Controller
         else {
             return redirect()->to('/');
         }    
+    }
+
+
+    public function api_add_item(Request $request){
+        // Items::create($request->all());
+        try {
+
+            $new_item = Items::create([
+                "title" => $request->title,
+                "description" => $request->description
+                ]);
+        }catch (Exception $e){
+            return $e;
+        }
+
+        // return ["state" => "success"];
+        return $new_item;
     }
 }

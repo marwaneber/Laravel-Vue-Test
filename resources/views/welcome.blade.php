@@ -93,6 +93,7 @@
                         <a href="/register">Register</a>
                     </div>
                 @endauth
+                <items-app></items-app>
             </div>
         </div>
     </body>
