@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/update_password', 'HomeController@update_password')->name('update_password');
+
+Route::post('/user/credentials', 'HomeController@postCredentials')->name('update_password_api');
