@@ -25,4 +25,5 @@ Route::post('/user/credentials', 'HomeController@postCredentials')->name('update
 
 Route::get('/api/items', 'HomeController@api')->name('get_items_api');
 
-Route::get('/api/add_item', 'HomeController@Store')->name('add_items');
+Route::post('/add', 'HomeController@add_item')->name('add_items');
+// Route::get('/api/add_item', 'HomeController@Store')->name('add_items');

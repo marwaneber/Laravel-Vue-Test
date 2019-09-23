@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Hash;
 use App\User;
 use App\Items;
+
 class HomeController extends Controller
 {
     /**
@@ -15,8 +16,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth');
     }
 
@@ -25,19 +25,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
+    public function index(){
         return view('home');
     }
 
-
-    public function update_password()
-    {
+    public function update_password(){
         return view('auth/update_password');
     }
 
-    public function admin_credential_rules(array $data)
-    {
+    public function admin_credential_rules(array $data){
         $messages = [
             'current-password.required' => 'Please enter current password',
             'password.required' => 'Please enter password',
@@ -57,8 +53,7 @@ class HomeController extends Controller
         return $items_data;
     }
 
-    public function postCredentials(Request $request)
-    {
+    public function postCredentials(Request $request){
         if(Auth::Check()){
             $request_data = $request->All();
             $validator = $this->admin_credential_rules($request_data);
@@ -85,14 +80,27 @@ class HomeController extends Controller
         }    
     }
 
+    public function add_item(Request $request){
+        $exploded = explode(',', $request->image);
 
-    public function Store(Request $request){
-        // Items::create($request->all());
-      
-            $new_item = Items::create($request->all());
-       
+        $image_decoded = base64_decode($exploded[1]);
 
-        // return ["state" => "success"];
-        // return $new_item;
+        $image_extension = explode(';', str_replace("data:image/", "", $exploded[0]))[0];
+
+        $image_file_name = str_random(10).'.'.$image_extension;
+
+        $image_path = public_path() . "/uploads/" . $image_file_name;
+
+        file_put_contents($image_path, $image_decoded);
+
+        $item = new Items();
+        $item->title = $request->title;
+        $item->description = $request->description;
+        $item->image = "/uploads/" . $image_file_name;
+        $item->save();
+        return response()->json([
+            'user' => $item,
+            'message' => 'Success'
+          ], 200);
     }
 }

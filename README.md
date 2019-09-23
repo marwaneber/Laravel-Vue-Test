@@ -8,15 +8,14 @@ Coding Challenge Laravel/VueJs application
 - ✅ Register of the user
 - ✅ Login of the user
 - ✅ Offer the user to update password
-- ✅ Add item including (title, description)
+- ✅ Add item including (title, description and image)
 - ✅ Listing items
 - ✅ Register of the user from command line (command below)
 
 ```$ php artisan register:user```
 
 # What I have to fix
-- ⚙️ Ability to add image into items
-- ⚙️ Listing items while scrolling
+- ⚙️ Ability to add image into items (solved)
 - ⚙️ Listing items while scrolling
 
 
@@ -36,3 +35,6 @@ Coding Challenge Laravel/VueJs application
 5.  Execute `npm run dev` to build project assets
 6.  Execute `php artisan serve` to run the project in your browser
 
+
+# Important note
+> 📝 I realise this project after 5 days of learning Laravel, I use my NodeJS knwoledge to get into it. So I want to express how I am thankful to @NextmediaMa for this challenge 🙏

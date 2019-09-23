@@ -8,14 +8,13 @@
         <input type="text" placeholder="Type your title.." v-model="item.title" />
       </div>
       <br />
-      <!-- 
-                            TO FIX
-                            ------
-                            <div>
-                            <label for="Item_image">Upload your image</label><br>
-                            <input type="file" accept=".png,.gif,.jpeg" @change="choose_image">
-                        </div>
-      <br>-->
+                            <!-- TO FIX
+                            ------ -->
+      <div>
+        <label for="Item_image">Upload your image</label><br>
+        <input type="file" accept=".png,.gif,.jpeg" @change="choose_image">
+      </div>
+      <br>
       <div>
         <label for="Item_image">Describe your item</label>
         <br />
@@ -34,7 +33,8 @@ export default {
     return {
       item: {
         title: "",
-        description: ""
+        description: "",
+        image: ""
       }
     };
   },
@@ -42,19 +42,31 @@ export default {
       send_item(){
           if(this.validate_item(this.item)){
               axios
-                .get("api/add_item", this.item)
+                .post("/add", this.item)
                 .then(res=>{
-                    console.log(res);
+                  if(res.status === 200){
+                    window.location.reload();
+                  }
+                    console.log(res.status);
                 })
                 .catch(err=>{
                     console.log(err);
-                })
+                });
           }else {
               alert("Please fill the fields");
           }
       },
       validate_item(item){
-          return item.title.length > 0 && item.description.length > 0;
+          return item.title.length > 0 && item.description.length > 0 && item.image.length > 0;
+      },
+      choose_image(e){
+        let image = new FileReader();
+        let vm = this;
+        image.readAsDataURL(e.target.files[0]);
+        image.onload = (res)=>{
+          vm.item.image = res.target.result;
+        }
+        console.log(vm.item);
       }
   }
 };

@@ -1867,21 +1867,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       item: {
         title: "",
-        description: ""
+        description: "",
+        image: ""
       }
     };
   },
   methods: {
     send_item: function send_item() {
       if (this.validate_item(this.item)) {
-        axios.get("api/add_item", this.item).then(function (res) {
-          console.log(res);
+        axios.post("/add", this.item).then(function (res) {
+          if (res.status === 200) {
+            window.location.reload();
+          }
+
+          console.log(res.status);
         })["catch"](function (err) {
           console.log(err);
         });
@@ -1890,7 +1894,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     validate_item: function validate_item(item) {
-      return item.title.length > 0 && item.description.length > 0;
+      return item.title.length > 0 && item.description.length > 0 && item.image.length > 0;
+    },
+    choose_image: function choose_image(e) {
+      var image = new FileReader();
+      var vm = this;
+      image.readAsDataURL(e.target.files[0]);
+
+      image.onload = function (res) {
+        vm.item.image = res.target.result;
+      };
+
+      console.log(vm.item);
     }
   }
 });
@@ -1954,6 +1969,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -37305,6 +37322,20 @@ var render = function() {
       _vm._v(" "),
       _c("div", [
         _c("label", { attrs: { for: "Item_image" } }, [
+          _vm._v("Upload your image")
+        ]),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "file", accept: ".png,.gif,.jpeg" },
+          on: { change: _vm.choose_image }
+        })
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", [
+        _c("label", { attrs: { for: "Item_image" } }, [
           _vm._v("Describe your item")
         ]),
         _vm._v(" "),
@@ -37405,6 +37436,10 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v(_vm._s(_vm.item.title))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("img", { attrs: { src: _vm.item.image, alt: "", width: "100" } })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
