@@ -20,7 +20,6 @@
 </head>
 <body>
     <div id="app">
-        @if (Route::has('home'))
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -49,6 +48,7 @@
                                     </li>
                                 @endif
                             @else
+                            
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->email }} <span class="caret"></span>
@@ -77,10 +77,6 @@
             <main class="py-4">
                 @yield('content')
             </main>
-        @else
-            <items-app>
-            </items-app>
-        @endif
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

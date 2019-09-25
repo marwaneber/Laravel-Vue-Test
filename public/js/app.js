@@ -1865,8 +1865,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1932,6 +1930,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1941,20 +1942,60 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      items: []
+      items: [],
+      fetched_data: {},
+      last_page: 0,
+      current_page: 1,
+      complet: false
     };
   },
   methods: {
     get_items: function get_items() {
       var vm = this;
       axios.get("api/items").then(function (res) {
-        vm.items = res.data;
+        vm.fetched_data[vm.current_page] = res.data.data;
+        vm.items = [];
+        Object.values(vm.fetched_data).forEach(function (item) {
+          vm.items = vm.items.concat(item);
+          console.log(vm.fetched_data.length);
+        });
+        vm.last_page = res.data.last_page;
         console.log(res);
       });
+    },
+    load_more: function load_more() {
+      var vm = this;
+      var bottom_page = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+      if (bottom_page && !this.complet) {
+        if (this.current_page < this.last_page) {
+          console.log("Fetching data of ".concat(vm.current_page));
+          this.current_page++;
+          axios.get("api/items?page=" + this.current_page).then(function (res) {
+            vm.fetched_data[vm.current_page] = res.data.data;
+            vm.loaded = false;
+            setTimeout(function () {
+              vm.items = [];
+              Object.values(vm.fetched_data).forEach(function (item) {
+                vm.items = vm.items.concat(item); // console.log(vm.fetched_data.length);
+              });
+            }, 1000);
+            vm.loaded = true;
+          });
+        } else {
+          this.items.push({
+            last_one: true
+          });
+          this.complet = true;
+        }
+      } else {
+        console.log("Last post");
+      }
     }
   },
   created: function created() {
     this.get_items();
+    window.addEventListener("scroll", this.load_more);
   }
 });
 
@@ -1969,6 +2010,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37287,91 +37334,101 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [_vm._v("Add new item")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", [
-        _c("label", { attrs: { for: "Item_title" } }, [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.item.title,
-              expression: "item.title"
-            }
-          ],
-          attrs: { type: "text", placeholder: "Type your title.." },
-          domProps: { value: _vm.item.title },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+  return _c(
+    "div",
+    { staticClass: "card mb-3", attrs: { id: "add_item_div" } },
+    [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Add new item")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", [
+          _c("label", { attrs: { for: "Item_title" } }, [_vm._v("Title")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.item.title,
+                expression: "item.title"
               }
-              _vm.$set(_vm.item, "title", $event.target.value)
+            ],
+            staticClass: "col-md-4 col-form-label text-md-right",
+            attrs: { type: "text", placeholder: "Type your title.." },
+            domProps: { value: _vm.item.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.item, "title", $event.target.value)
+              }
             }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", [
-        _c("label", { attrs: { for: "Item_image" } }, [
-          _vm._v("Upload your image")
-        ]),
-        _c("br"),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "file", accept: ".png,.gif,.jpeg" },
-          on: { change: _vm.choose_image }
-        })
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", [
-        _c("label", { attrs: { for: "Item_image" } }, [
-          _vm._v("Describe your item")
+          })
         ]),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.item.description,
-              expression: "item.description"
-            }
-          ],
-          attrs: { placeholder: "Type your description here.." },
-          domProps: { value: _vm.item.description },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", [
+          _c("label", { attrs: { for: "Item_image" } }, [
+            _vm._v("Upload your image")
+          ]),
+          _c("br"),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "col-md-4 col-form-label text-md-right",
+            attrs: { type: "file", accept: ".png,.gif,.jpeg" },
+            on: { change: _vm.choose_image }
+          })
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", { attrs: { for: "Item_image" } }, [
+            _vm._v("Describe your item")
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.item.description,
+                expression: "item.description"
               }
-              _vm.$set(_vm.item, "description", $event.target.value)
+            ],
+            staticClass: "col-md-4 col-form-label text-md-right",
+            attrs: { placeholder: "Type your description here.." },
+            domProps: { value: _vm.item.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.item, "description", $event.target.value)
+              }
             }
-          }
-        })
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body text-center" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary large",
+            on: { click: _vm.send_item }
+          },
+          [_vm._v("Add new item")]
+        )
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", on: { click: _vm.send_item } },
-        [_vm._v("Get Items")]
-      )
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37395,18 +37452,48 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [_vm._v("All items")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-body" },
-      _vm._l(_vm.items, function(item, k) {
-        return _c("SingleItem", { key: k, attrs: { item: item } })
-      }),
-      1
-    )
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "card",
+      attrs: { id: "all_items_div" },
+      on: {
+        scroll: function($event) {
+          return _vm.consol.log("herrr")
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "card-header" }, [_vm._v("All items")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _vm._l(_vm.items, function(item, k) {
+            return _c("SingleItem", { key: k, attrs: { item: item } })
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.complet,
+                  expression: "!complet"
+                }
+              ],
+              staticClass: "text-center"
+            },
+            [_c("img", { attrs: { src: __webpack_require__(/*! ../loading.gif */ "./resources/js/loading.gif"), alt: "" } })]
+          )
+        ],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37430,31 +37517,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container mb-3" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v(_vm._s(_vm.item.title))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("img", { attrs: { src: _vm.item.image, alt: "", width: "100" } })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.item.description) +
-                "\n                "
-            )
-          ])
-        ])
+        !_vm.item.last_one
+          ? _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v(_vm._s(_vm.item.title) + " "),
+                _c("small", { attrs: { right: "" } }, [
+                  _vm._v(_vm._s(_vm.item.created_at))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("img", {
+                  attrs: { src: _vm.item.image, alt: "", width: "100" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.item.description) +
+                    "\n                "
+                )
+              ])
+            ])
+          : _c("div", { staticClass: "card" }, [_vm._m(0)])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body text-center" }, [
+      _vm._v(
+        "\n                    No more posts! Put some content 📝\n                    "
+      ),
+      _c("a", { attrs: { href: "#add_item_div" } }, [
+        _vm._v("tap here to add new post")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -49865,6 +49973,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SingleItem_vue_vue_type_template_id_3740f2b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/loading.gif":
+/*!**********************************!*\
+  !*** ./resources/js/loading.gif ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/loading.gif?03ce3dcc84af110e9da8699a841e5200";
 
 /***/ }),
 

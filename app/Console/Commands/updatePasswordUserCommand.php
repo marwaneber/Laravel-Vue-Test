@@ -1,21 +1,23 @@
 <?php
+
 namespace App\Console\Commands;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use Illuminate\Console\Command;
-class RegisterUserCommand extends Command
-{
+class updatePasswordUserCommand extends Command {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'register:user';
+    protected $signature = 'chpwd:user';
+
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Register user';
+    protected $description = 'Command to change the password of a user.';
     /**
      * User model.
      *
@@ -27,11 +29,12 @@ class RegisterUserCommand extends Command
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
         parent::__construct();
-        $this->user = $user;
+        $this->user = new User();
     }
+
     /**
      * Execute the console command.
      *
@@ -41,7 +44,7 @@ class RegisterUserCommand extends Command
     {
         $details = $this->getDetails();
         
-        $user = $this->user->createUser($details);
+        $user = $this->user->updateUser($details);
         $this->display($user);
     }
     /**
@@ -51,10 +54,17 @@ class RegisterUserCommand extends Command
      */
     private function getDetails() : array
     {
-        $details['email'] = $this->ask('Email');
-        $details['password'] = $this->secret('Password');
+        $details['id'] = $this->ask('User ID');
+        $details['current_password'] = $this->secret('Current password');
+        
+        while (! $this->isValidAuth($details['id'], $details['current_password'])) {
+            $this->error('Password entered don\'t match our records');
+            $details['current_password'] = $this->secret('Current password');
+        }
+        
+        $details['password'] = $this->secret('New password');
         $details['confirm_password'] = $this->secret('Confirm password');
-        while (! $this->isValidPassword($details['password'], $details['confirm_password'])) {
+        while (! $this->isMatch($details['password'], $details['confirm_password'])) {
             if (! $this->isRequiredLength($details['password'])) {
                 $this->error('Password must be more that six characters');
             }
@@ -79,7 +89,7 @@ class RegisterUserCommand extends Command
             'Id' => $user->id,
             'email' => $user->email
         ];
-        $this->info('A user is created');
+        $this->info('Password changed for this user');
         $this->table($headers, [$fields]);
     }
     /**
@@ -89,10 +99,10 @@ class RegisterUserCommand extends Command
      * @param string $confirmPassword
      * @return boolean
      */
-    private function isValidPassword(string $password, string $confirmPassword) : bool
+    private function isValidAuth(int $user_id, string $password) : bool
     {
-        return $this->isRequiredLength($password) &&
-        $this->isMatch($password, $confirmPassword);
+        $obj_user = User::find($user_id);
+        return Hash::check($password, $obj_user->password);
     }
     /**
      * Check if password and confirm password matches.

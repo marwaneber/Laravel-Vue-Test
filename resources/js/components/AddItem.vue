@@ -1,28 +1,26 @@
 <template>
-  <div class="card">
+  <div class="card mb-3" id="add_item_div">
     <div class="card-header">Add new item</div>
     <div class="card-body">
       <div>
         <label for="Item_title">Title</label>
         <br />
-        <input type="text" placeholder="Type your title.." v-model="item.title" />
+        <input type="text" class="col-md-4 col-form-label text-md-right" placeholder="Type your title.." v-model="item.title" />
       </div>
       <br />
-                            <!-- TO FIX
-                            ------ -->
       <div>
         <label for="Item_image">Upload your image</label><br>
-        <input type="file" accept=".png,.gif,.jpeg" @change="choose_image">
+        <input type="file" class="col-md-4 col-form-label text-md-right" accept=".png,.gif,.jpeg" @change="choose_image">
       </div>
       <br>
       <div>
         <label for="Item_image">Describe your item</label>
         <br />
-        <textarea v-model="item.description" placeholder="Type your description here.."></textarea>
+        <textarea v-model="item.description" class="col-md-4 col-form-label text-md-right" placeholder="Type your description here.."></textarea>
       </div>
     </div>
-    <div class="card-body">
-      <button class="btn btn-primary" @click="send_item">Get Items</button>
+    <div class="card-body text-center">
+      <button class="btn btn-primary large" @click="send_item">Add new item</button>
     </div>
   </div>
 </template>

@@ -55,4 +55,12 @@ class User extends Authenticatable
         $user->save();
         return $user;
     }
+
+    public function updateUser(array $details) : self
+    {
+        $user = User::find($details["id"]);
+        $user->password = Hash::make($details['password']);
+        $user->save();
+        return $user;
+    }
 }

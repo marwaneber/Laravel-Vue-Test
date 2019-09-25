@@ -87,13 +87,13 @@
                 <div class="links">
                     <a href="#">Start scrolling</a>
                 </div>
+                <items-app></items-app>
                 @else
                     <div class="links">
                         <a href="/login">Login</a>
                         <a href="/register">Register</a>
                     </div>
                 @endauth
-                <items-app></items-app>
             </div>
         </div>
     </body>

@@ -8,7 +8,6 @@
         </div>
     </div>
     <div class="row justify-content-center">
-
         <div class="col-md-8">
             <items-app></items-app>
         </div>

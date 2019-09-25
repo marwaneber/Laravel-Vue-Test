@@ -11,19 +11,19 @@
 |
 */
 
+// GET routes
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@showHomePage')->name('home_page');
 
-Route::get('/update_password', 'HomeController@update_password')->name('update_password');
+Route::get('/update_password', 'HomeController@showUpdatePassword')->name('show_update_password');
 
 Route::post('/user/credentials', 'HomeController@postCredentials')->name('update_password_api');
 
-Route::get('/api/items', 'HomeController@api')->name('get_items_api');
+Route::get('/api/items', 'HomeController@getAllItems')->name('get_items_api');
 
-Route::post('/add', 'HomeController@add_item')->name('add_items');
-// Route::get('/api/add_item', 'HomeController@Store')->name('add_items');
+Route::post('/add', 'HomeController@addNewItem')->name('add_new_item');
