@@ -18,10 +18,8 @@ class CreateItemsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('image');
+            $table->integer('user_id');
             $table->timestamps();
-
-            // we can add column 'user_id' to match every item to their owner
-            // $table->int('user_id');
         });
     }
 

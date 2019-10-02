@@ -19,12 +19,17 @@ Coding Challenge Laravel/VueJs application
 
 ```$ php artisan chpwd:user```
 
+- ✅ Be able to seed fake data (10000 items / 100 users) from the command line. (command below)
+
+```$ php artisan db:seed```
+
+
 - ⚙️ Ability to add image into items (solved)
 - ⚙️ Listing items while scrolling (solved)
 - 📓 Be able to change a user password from the command line. (solved)
+- 📓 Be able to seed fake data (10000 items / 100 users) from the command line. (solved)
 
 # What I have to do next
-- 📓 Be able to seed fake data (10000 items / 100 users) from the command line.
 - 📓 Write some unit tests
 
 
@@ -42,4 +47,4 @@ Coding Challenge Laravel/VueJs application
 # Important note
 > 📝 I realise this project after 5 days of learning Laravel, I use my NodeJS knwoledge to get into it. So I want to express how I am thankful to @NextmediaMa for this challenge 🙏
 
-> Update! Now I complet 7 days of laravel 🙏
+> Update! Now I complet 13 days of laravel 🙏
